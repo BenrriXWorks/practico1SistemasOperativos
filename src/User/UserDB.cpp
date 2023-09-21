@@ -14,6 +14,8 @@ bool UserDB::loadUsers(std::string path){
     if (!fr.open(path))
         return (printf("UserDB: No se pudo abrir el archivo en {%s}\n", path.c_str()),false);
 
+    DB.emplace("admin","admin");
+
     for (std::string line : fr.readLines()){
         std::vector<std::string> tokens = split(line,';');
         if (tokens.size() != 2)
@@ -24,4 +26,12 @@ bool UserDB::loadUsers(std::string path){
             return (printf("UserDB: El usuario de la linea {%s} ya existe o no ha podido ser agregado por un motivo desconocido\n",line.c_str()));
     }
     return true;
+}
+
+User* UserDB::login (std::string username, std::string password) const {
+    std::map<std::string, std::string> :: iterator it;
+    if ((it = DB.find(username)) != DB.end() && it->second == password){
+        return new User(username, (username == "admin"));
+    }
+    return nullptr;
 }
