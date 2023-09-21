@@ -15,20 +15,20 @@ Menu* Menu::getInstance() {
 
 bool Menu::init(User* user) {
     // Implementa la inicialización aquí
-    int optionNumber = 0;
+    uint8_t optionNumber = 0;
 
     while(optionNumber <= 3){
 
-        options.push_back(Option(optionNumber, "SALIR", ConcreteFunctionWrapper_0()));
+        options.push_back(Option(optionNumber, "SALIR", new ConcreteFunctionWrapper_0()));
         optionNumber++;
         
         if (user->isAdmin()) 
-            options.push_back(Option(optionNumber, "CREAR USUARIO", ConcreteFunctionWrapper_1()));
+            options.push_back(Option(optionNumber, "CREAR USUARIO", new ConcreteFunctionWrapper_1()));
         optionNumber++;
-        options.push_back(Option(optionNumber, "IMPRIMIR MSG PARA EL USUARIO", ConcreteFunctionWrapper_2()));
+        options.push_back(Option(optionNumber, "IMPRIMIR MSG PARA EL USUARIO", new ConcreteFunctionWrapper_2()));
         optionNumber++;
-
-        options.push_back(Option(optionNumber, "ORDENAR VECTOR", ConcreteFunctionWrapper_3()));
+        options.push_back(Option(optionNumber, "ORDENAR VECTOR", new ConcreteFunctionWrapper_3()));
+        optionNumber++;
         }
 
     return true; // Cambia esto según sea necesario
