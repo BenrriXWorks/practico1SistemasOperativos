@@ -4,6 +4,11 @@
 #include "ConcreteFunctionWrapper_1.h"
 #include "ConcreteFunctionWrapper_2.h"
 #include "ConcreteFunctionWrapper_3.h"
+#include <iostream>
+#include <cctype>
+#include <algorithm>
+#include <sys/types.h>
+#include <limits>
 #include "User.h"
 #include "vector"
 #pragma once

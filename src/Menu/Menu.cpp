@@ -1,7 +1,4 @@
 #include "../../include/Menu.h"
-#include <iostream>
-#include <cctype>
-#include <algorithm>
 using namespace std;
 
 Menu* Menu::instance = nullptr;
