@@ -5,11 +5,13 @@
 #include "ConcreteFunctionWrapper_2.h"
 #include "ConcreteFunctionWrapper_3.h"
 #include "User.h"
+#include "vector"
 #pragma once
 
 class Menu {
 private:
     static Menu* instance;
+    std::vector<Option> options; 
     Menu(){};
 
 public:
