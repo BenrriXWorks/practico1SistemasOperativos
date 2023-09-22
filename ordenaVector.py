@@ -20,8 +20,12 @@ def main(vectorString):
     pid = os.getpid()
     
     # Imprimir la lista de números ordenada y el PID
-    print("Lista de números ordenada:", numeros_ordenados)
-    print("PID del proceso actual:", pid)
+    print("Lista de números ordenada:")
+    for numero in numeros_ordenados:
+        print(numero, end="; ")
+    
+    print("\nPID del proceso actual:", pid)
+    return
 
 if __name__ == "__main__":
     vectorString = sys.argv[1]
