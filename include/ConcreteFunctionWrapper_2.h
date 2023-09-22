@@ -5,5 +5,4 @@
 class ConcreteFunctionWrapper_2 : public FunctionWrapper {
 public:
     bool execute();
-    
 };
