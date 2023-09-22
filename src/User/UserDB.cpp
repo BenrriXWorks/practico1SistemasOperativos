@@ -17,6 +17,7 @@ bool UserDB::loadUsers(std::string path){
     DB.emplace("admin","admin");
 
     for (std::string line : fr.readLines()){
+        if (line.empty()) continue;
         std::vector<std::string> tokens = split(line,';');
         if (tokens.size() != 2)
             return (printf("UserDB: Formato incorrecto de la base de datos de usuarios en la linea {%s}\n",line.c_str()));

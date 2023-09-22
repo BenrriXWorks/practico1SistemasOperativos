@@ -18,5 +18,7 @@ public:
     bool loadUsers(std::string path);
     // Retorna nullptr si el usuario no existe.
     User* login(std::string user, std::string psw) const;
+    // Retorna true si el usuario existe
+    inline bool fetchUser(std::string user) const {return DB.find(user) != DB.end();};
 
 };
