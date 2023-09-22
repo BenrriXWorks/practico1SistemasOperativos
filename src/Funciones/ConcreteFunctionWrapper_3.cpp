@@ -1,0 +1,21 @@
+#include "../../include/ConcreteFunctionWrapper_3.h"
+using namespace std;
+
+bool ConcreteFunctionWrapper_3::execute(){
+    ArgumentsLoader* args = ArgumentsLoader::getInstance();
+    string vector = args->get_v();
+    // Construir el comando para llamar al script de Python
+    string comandoPython = "python programa.py \"" + vector + "\"";
+
+    // Ejecutar el comando de Python
+    int resultado = system(comandoPython.c_str());
+
+    // Verificar si la ejecución fue exitosa
+    if (resultado == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+    
