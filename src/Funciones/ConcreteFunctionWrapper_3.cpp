@@ -5,7 +5,7 @@ bool ConcreteFunctionWrapper_3::execute(){
     ArgumentsLoader* args = ArgumentsLoader::getInstance();
     string vector = args->get_v();
     // Construir el comando para llamar al script de Python
-    string comandoPython = "python programa.py \"" + vector + "\"";
+    string comandoPython = "python3 ordenaVector.py \"" + vector + "\"";
 
     // Ejecutar el comando de Python
     int resultado = system(comandoPython.c_str());
