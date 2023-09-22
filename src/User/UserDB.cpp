@@ -37,3 +37,13 @@ User* UserDB::login (std::string username, std::string password) const {
     }
     return nullptr;
 }
+
+bool UserDB::addUserCache(std::string username, std::string password){
+
+    if (fetchUser(username))
+        return (printf("UserDB: El usuario ya existe en la cache.\n"),false);
+    if (!DB.emplace(username,password).second){
+        return (printf("UserDB: No se pudo agregar el usuario a la cache.\n"),false);
+    }
+    return true;
+}

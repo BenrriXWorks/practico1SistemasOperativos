@@ -21,4 +21,6 @@ public:
     // Retorna true si el usuario existe
     inline bool fetchUser(std::string user) const {return DB.find(user) != DB.end();};
 
+    bool addUserCache(std::string username, std::string password);
+
 };

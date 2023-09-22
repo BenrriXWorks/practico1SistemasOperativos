@@ -2,11 +2,12 @@
 
 bool ConcreteFunctionWrapper_1 :: execute() {
 
-    ArgumentsLoader* args = ArgumentsLoader::getInstance();
+    EnvLoader* env = EnvLoader::getInstance();
+    UserDB* db = UserDB::getInstance();
 
     FileWriter fw;
-    if (!fw.openAppend(args->get_p()))
-        return (printf("Function 1: No se pudo abrir el archivo de usuarios en {%s}",args->get_p().c_str()),false);
+    if (!fw.openAppend(env->getUserDB_path()))
+        return (printf("Function 1: No se pudo abrir el archivo de usuarios en {%s}",env->getUserDB_path().c_str()),false);
     
     std::string username, password;
     printf("Ingrese el usuario a agregar: ");
@@ -21,17 +22,17 @@ bool ConcreteFunctionWrapper_1 :: execute() {
         return (printf("Function 1: Error, la contrasena no puede ser vacia\n"),false);
     if (password.find(';') != std::string::npos)
         return (printf("Function 1: La contrasena contiene caracteres invalidos (\n\t'\")\n\\"),false);
-    
-    UserDB* db = UserDB::getInstance();
-    if (db->fetchUser(username)){
+    if (db->fetchUser(username))
         return (printf("Function 1: El usuario {%s} ya existe!\n",username.c_str()),false);
-    }
+    
     
     printf("Creando usuario = (u:{%s}, p:{%s})\n",username.c_str(),password.c_str());
 
-    fw << username << ";" << password;
+    if (!db->addUserCache(username,password))
+        return (printf("Function 1: Hubo un error al agregar el usuario a la base de datos\n"),false);
+    
+    fw << username << ";" << password << "\n";
 
-    printf("Recuerda reiniciar el sistema para que el cambio surta efecto\n");
     fw.close();
     return true;
 }
