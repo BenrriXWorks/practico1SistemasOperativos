@@ -4,6 +4,9 @@ using namespace std;
 bool ConcreteFunctionWrapper_3::execute(){
     ArgumentsLoader* args = ArgumentsLoader::getInstance();
     string vector = args->get_v();
+    if (strip(vector).empty()){
+        return (printf("No se ingreso un vector\n"),false);
+    }
     // Construir el comando para llamar al script de Python
     string comandoPython = "python3 ordenaVector.py \"" + vector + "\"";
 
@@ -11,11 +14,7 @@ bool ConcreteFunctionWrapper_3::execute(){
     int resultado = system(comandoPython.c_str());
 
     // Verificar si la ejecución fue exitosa
-    if (resultado == 0) {
-        return true;
-    } else {
-        return false;
-    }
+    return resultado == 0;
 }
 
     

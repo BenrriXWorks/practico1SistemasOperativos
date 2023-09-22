@@ -6,6 +6,6 @@ bool ConcreteFunctionWrapper_0 :: execute(){
     #else
         system("clear");
     #endif
-    printf("Saliendo!\n");
+    printf("Adios!\n");
     exit(EXIT_SUCCESS);
 }

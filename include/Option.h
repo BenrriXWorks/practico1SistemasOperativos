@@ -5,9 +5,9 @@
 class Option {
 
 private:
-    FunctionWrapper* func;
-    std::string texto;
     uint8_t id;
+    std::string texto;
+    FunctionWrapper* func;
 
 public:
     Option(uint8_t id, std::string texto, FunctionWrapper* func) : id(id), texto(texto), func(func) {}

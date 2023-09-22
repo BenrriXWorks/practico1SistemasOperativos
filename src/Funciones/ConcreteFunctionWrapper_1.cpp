@@ -6,7 +6,7 @@ bool ConcreteFunctionWrapper_1 :: execute() {
 
     FileWriter fw;
     if (!fw.openAppend(args->get_p()))
-        return (printf("Function 1: No se pudo abrir el archivo de usuarios en {%s}",args->get_p()),false);
+        return (printf("Function 1: No se pudo abrir el archivo de usuarios en {%s}",args->get_p().c_str()),false);
     
     std::string username, password;
     printf("Ingrese el usuario a agregar: ");
@@ -24,13 +24,14 @@ bool ConcreteFunctionWrapper_1 :: execute() {
     
     UserDB* db = UserDB::getInstance();
     if (db->fetchUser(username)){
-        return (printf("Function 1: El usuario {%s} ya existe!\n",username),false);
+        return (printf("Function 1: El usuario {%s} ya existe!\n",username.c_str()),false);
     }
     
-    printf("Creando usuario = (u:{%s}, p:{%s})\n",username,password);
+    printf("Creando usuario = (u:{%s}, p:{%s})\n",username.c_str(),password.c_str());
 
     fw << username << ";" << password;
 
     printf("Recuerda reiniciar el sistema para que el cambio surta efecto\n");
+    fw.close();
     return true;
 }

@@ -29,6 +29,7 @@ bool EnvLoader::init(bool onlyFile){
         }
 
         for (std::string s : fr.readLines()){
+            //USER_DB=data/database.csv
             if (s.empty()) continue;
             vector<string> tokens = split(s,'=');
             if (tokens.size() != 2){
@@ -47,12 +48,13 @@ bool EnvLoader::init(bool onlyFile){
             }
         }
     }
-    conditionsMeet = 0;
-    if (userDB.empty())
+    if (userDB.empty()){
         cerr << "EnvLoader: " << "No se encontro la variable de entorno userDB" << endl;
-
+        return false;
+    }
     // Si se encontraron todas las variables
-    return conditionsMeet == 1 && (loaded=true);
+    loaded = true;
+    return true;
 }
 EnvLoader* EnvLoader::getInstance(){
     if (instance == nullptr)
