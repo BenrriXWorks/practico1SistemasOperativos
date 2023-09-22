@@ -21,7 +21,7 @@ private:
     Menu(){};
 
 public:
-    Menu* getInstance();
+    static Menu* getInstance();
     bool init(User* user);
     void display();
 };
