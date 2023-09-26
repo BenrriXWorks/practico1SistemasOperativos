@@ -1,4 +1,6 @@
 #include "FileStack.h"
+#include "EnvLoader.h"
+#include "Functions.h"
 #include <thread>
 
 class ThreadProcessor
