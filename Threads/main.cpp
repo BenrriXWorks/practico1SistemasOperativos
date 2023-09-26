@@ -3,13 +3,6 @@
 #include "include/ThreadProcessor.h"
 #include <filesystem>
 #include <vector>
-
-namespace fs = std::filesystem;
-
-#include <iostream>
-#include <filesystem>
-#include <vector>
-
 namespace fs = std::filesystem;
 
 std::vector<std::string> archivosEnDirectorio(const fs::path& directorio) {
