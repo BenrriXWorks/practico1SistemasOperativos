@@ -9,4 +9,4 @@ std::pair<std::vector<int>,bool> splitInt(const std::string word, char delim);
 std::string strip(const std::string line, char c);
 std::string strip(const std::string line);
 std::string stripAllOf(std::string line, std::string chars);
-std::string soloMin(std::string line)
+std::string soloMin(std::string line);

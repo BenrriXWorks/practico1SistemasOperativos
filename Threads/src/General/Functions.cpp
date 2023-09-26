@@ -52,7 +52,7 @@ string strip(const string line){
 string soloMin(string line){
     string resultado;
     for (char c : line){
-        if(c>'a' && c < 'z')
+        if((c>'a' && c < 'z' )|| c == ' ')
             resultado += c;
     }
     return resultado;
