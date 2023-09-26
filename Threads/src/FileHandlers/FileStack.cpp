@@ -1,13 +1,13 @@
 #include "../../include/FileStack.h"
 
-FileReader& FileStack::next(){
+FileReader* FileStack::next(){
 
     if (cola.empty())
         throw std::runtime_error("La cola esta vacia");
 
     FileReader *file = cola.back();
     cola.pop_back();
-    return (*file);
+    return file;
 };
 
 

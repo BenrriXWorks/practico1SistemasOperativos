@@ -7,7 +7,7 @@ private:
     std::vector<FileReader*> cola;
     
 public:
-    FileReader& next();
+    FileReader* next();
     FileStack(std::vector<std::string> listOfPaths);
     inline bool empty() {return cola.size()==0;};
 };
