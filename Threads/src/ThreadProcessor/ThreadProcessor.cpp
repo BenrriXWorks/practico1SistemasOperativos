@@ -16,11 +16,11 @@ ThreadProcessor::ThreadProcessor(FileStack &stack, uint8_t nThreads) {
 }
 
 void ThreadProcessor::execute() {
-    while (!stack->empty()) {
+    if (!stack->empty()) {
 
         FileReader *fr = stack->next();
 
-     /*if (!fr.open(path))
+    /*if (!fr.open(path))
         return (printf("UserDB: No se pudo abrir el archivo en {%s}\n", path.c_str()),false);*/
         // aqui contamos palabras
         unordered_map<string, int> contadorPalabras;
@@ -54,14 +54,14 @@ void ThreadProcessor::execute() {
 }
 
 bool ThreadProcessor::begin() {
-
+    while (!stack->empty()) {
     for (uint8_t i = 0; i < nThreads; i++) {
         threads[i] = std::thread([this]() { this->execute(); });
     }
 
     for (uint8_t i = 0; i < nThreads; i++) {
         threads[i].join(); // espera a que terminen los procesos
-    }
+    }}
 
     return true;
 }
