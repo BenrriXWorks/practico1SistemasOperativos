@@ -48,3 +48,12 @@ string stripAllOf(string line, string chars){
 string strip(const string line){
     return strip(line,' ');
 }
+
+string soloMin(string line){
+    string resultado;
+    for (char c : line){
+        if(c>'a' && c < 'z')
+            resultado += c;
+    }
+    return resultado;
+}
