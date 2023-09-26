@@ -35,8 +35,11 @@ bool FileReader::open(std::string path) {
     if (!fs.is_open()) {
         return false;
     }
+    fullRoute = path;
     return true;
 }
+
+
 
 bool FileReader::eof() {
     return fs.eof();

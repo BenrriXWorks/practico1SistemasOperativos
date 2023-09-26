@@ -4,10 +4,10 @@
 class FileStack
 {
 private:
-    std::vector<FileReader> cola;
-    FileStack* instance;
+    std::vector<FileReader*> cola;
+    
 public:
-    FileReader next();
-    FileStack* getInstance();
-    bool init(std::vector<std::string> listOfPaths);
+    FileReader& next();
+    FileStack(std::vector<std::string> listOfPaths);
+    inline bool empty() {return cola.size()==0;};
 };

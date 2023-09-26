@@ -52,6 +52,7 @@ bool FileWriter::open(const std::string path) {
                 return false;
             }
         }
+        fullRoute = path;
     }
 
     // Luego, abre el archivo
@@ -61,6 +62,7 @@ bool FileWriter::open(const std::string path) {
         return false;
     }
     fs.imbue(std::locale(fs.getloc(), new std::codecvt_utf8<wchar_t>));
+    fullRoute = path;
     return true;
 
 }
@@ -90,6 +92,7 @@ bool FileWriter::openAppend(const std::string path) {
         return false;
     }
     fs.imbue(std::locale(fs.getloc(), new std::codecvt_utf8<wchar_t>));
+    fullRoute = path;
     return true;
 }
 
