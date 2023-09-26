@@ -6,6 +6,8 @@
 #include <iostream>
 #include <unordered_map>
 
+#pragma once
+
 class ThreadProcessor
 {
 private:

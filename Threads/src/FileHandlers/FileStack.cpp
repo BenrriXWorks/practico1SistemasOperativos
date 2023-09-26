@@ -16,7 +16,7 @@ FileStack::FileStack(std::vector<std::string> listOfPaths){
     for (std::string s : listOfPaths){
         FileReader *fr = new FileReader();
         if (!fr->open(s)){
-            printf("El archivo en {%s} no ha podido ser leido. Saltando.\n",s);
+            printf("El archivo en {%s} no ha podido ser leido. Saltando.\n",s.c_str());
             delete fr;
         }
         cola.push_back(fr);        

@@ -21,6 +21,10 @@ class Main{
 public:
     Main(){
         EnvLoader* envLoader = EnvLoader::getInstance();
+        if (!envLoader->init(1)){
+            printf("Main: No se pudo cargar las variables de entorno\n");
+            throw std::runtime_error("No se pudieron cargar las variables de entorno");
+        };
         FileStack fileStack(archivosEnDirectorio(envLoader->getPathIn()));
         
         int nthreads=1;
@@ -37,11 +41,11 @@ public:
 };
 
 int main(){
-    try{
+    //try{
         Main();
-    }
-    catch(...){
+    //}
+    //catch(...){
         printf("HUbo un error critico.\n");
-    }
+    //}
     return 0;
 }

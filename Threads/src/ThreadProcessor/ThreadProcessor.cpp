@@ -53,7 +53,6 @@ bool ThreadProcessor::execute() {
 
 
         cout << "Archivo " << fr->getFullRoute() << ", procesado por el thread " << this_thread::get_id() << endl;
-        delete fr;
     }
     return true;
 }

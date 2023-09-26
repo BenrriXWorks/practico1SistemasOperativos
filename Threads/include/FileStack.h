@@ -1,6 +1,8 @@
 #include "FileReader.h"
 #include "vector"
 
+#pragma once
+
 class FileStack
 {
 private:

@@ -15,6 +15,6 @@ public:
     virtual bool open(std::string path) = 0;
     inline void close() {fs.close();};
     bool checkDirectory(std::string path);
-    inline std::string getFilename() const {return fullRoute.find('\\/') ? fullRoute.substr(fullRoute.find_last_of("\\/") + 1) : fullRoute;};
+    inline std::string getFilename() const {return fullRoute.find("\\/") ? fullRoute.substr(fullRoute.find_last_of("\\/") + 1) : fullRoute;};
     inline std::string getFullRoute() const {return fullRoute;};
 };
