@@ -20,7 +20,7 @@ bool ThreadProcessor::execute() {
 
         FileReader *fr = stack->next();
 
-    /*if (!fr.open(path))
+     /*if (!fr.open(path))
         return (printf("UserDB: No se pudo abrir el archivo en {%s}\n", path.c_str()),false);*/
         if (!fr->open(fr->getFilename())) {
             return (printf("ThreadProcessor: No se pudo abrir el archivo en {%s}\n", fr->getFilename().c_str()),false);
@@ -61,7 +61,7 @@ bool ThreadProcessor::execute() {
 bool ThreadProcessor::begin() {
 
     for (uint8_t i = 0; i < nThreads; i++) {
-        threads[i] = thread (execute(), this);
+        threads[i] = std::thread([this]() { this->execute(); });
     }
 
     for (uint8_t i = 0; i < nThreads; i++) {
