@@ -20,8 +20,12 @@ void ThreadProcessor::execute() {
             string texto = fr->readLine();
             vector <string> lineas = split(texto,' ');
             for(string linea: lineas){
-                //aca le quitamos los espacios.. los caracteres raros.. y lo pasamos a minuscula
-                contadorPalabras[linea]++;
+                auto it = contadorPalabras.find(linea);
+                if (it != contadorPalabras.end())
+                    it->second++;
+                else
+                    contadorPalabras.emplace(linea,0);
+
             }
         }
         // aqui se creara el archivo

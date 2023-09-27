@@ -4,7 +4,7 @@ FileReader* FileStack::next(){
 
     if (cola.empty())
         throw std::runtime_error("La cola esta vacia");
-    FileReader *file = cola.at(size--);
+    FileReader *file = cola.at(--size);
     return file;
 };
 
