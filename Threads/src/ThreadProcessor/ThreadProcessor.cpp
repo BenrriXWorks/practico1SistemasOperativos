@@ -25,7 +25,8 @@ void ThreadProcessor::execute() {
         }
 
         for (const auto& p : words)
-            filewriter << string(p.first);
+            filewriter << p.first.c_str() << ";" << p.second << "\n";
+
         filewriter.close();
     }
 
@@ -33,13 +34,9 @@ void ThreadProcessor::execute() {
 
 bool ThreadProcessor::begin() {
 
-    threads = vector<thread>();
-
     for (uint8_t i = 0; i < nThreads; i++) threads.emplace_back([this]() { this->execute(); });
     
     for (std::thread& t : threads) t.join();
-    
-
     
     return true;
 }

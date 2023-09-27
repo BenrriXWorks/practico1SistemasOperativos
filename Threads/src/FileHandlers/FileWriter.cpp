@@ -6,8 +6,12 @@ bool FileWriter::writeLine(const std::string line) {
         std::cerr << "FileWriter: File is not open." << std::endl;
         return false;
     }
+    // Convierte la línea de UTF-8 a ancho completo (UTF-16)
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    std::wstring utf16Line = converter.from_bytes(line);
+
     // Escribir la línea seguida de un salto de línea
-    fs << std::wstring(line.begin(),line.end()) << L'\n';
+    fs << utf16Line << L'\n';
     return true;
 }
 
@@ -30,8 +34,10 @@ bool FileWriter::write(const std::string text) {
         return false;
     }
 
-    // Escribir el texto
-    fs << std::wstring(text.begin(),text.end());
+    // Convierte el texto de UTF-8 a ancho completo (UTF-16) y escríbelo
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    std::wstring utf16Text = converter.from_bytes(text);
+    fs << utf16Text;
     return true;
 }
 
@@ -55,7 +61,6 @@ bool FileWriter::open(const std::string path) {
         fullRoute = path;
     }
 
-    try{
     // Luego, abre el archivo
     fs.open(path.c_str(), std::ios::out | std::ios::binary);
     if (!fs.is_open()) {
@@ -65,10 +70,7 @@ bool FileWriter::open(const std::string path) {
     fs.imbue(std::locale(fs.getloc(), new std::codecvt_utf8<wchar_t>));
     fullRoute = path;
     return true;
-    }
-    catch(...){
-        return false;
-    }
+
 }
 
 bool FileWriter::openAppend(const std::string path) {
