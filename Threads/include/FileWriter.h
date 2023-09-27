@@ -14,4 +14,7 @@ public:
     bool openAppend(const std::string path);
     bool close();
     FileWriter& operator<<(const std::string& s);
+    inline FileWriter& operator<<(const char& c) {return *this << std::string(1,c);}
+    inline FileWriter& operator<<(const char* word) {return *this << std::string(word);}
+    inline FileWriter& operator<<(int num) {return *this << std::to_string(num);}
 };

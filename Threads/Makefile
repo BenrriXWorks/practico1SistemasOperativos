@@ -10,25 +10,32 @@ EXECUTABLE = main
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -I$(INCLUDE_DIR)
 
-# Obtener la lista de archivos fuente
-SOURCES = $(wildcard $(SRC_DIR)/**/*.cpp) main.cpp
+# Obtener la lista de archivos fuente (excluyendo main.cpp)
+SOURCES = $(filter-out main.cpp, $(wildcard $(SRC_DIR)/**/*.cpp))
+
+# Objeto correspondiente a main.cpp
+MAIN_OBJECT = main.o
 
 # Objetos generados
-OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(COMPILED_DIR)/%.o,$(SOURCES))
+OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(COMPILED_DIR)/%.o,$(SOURCES)) $(MAIN_OBJECT)
 
 # Regla principal para compilar el ejecutable
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJECTS)
-
-# Regla para compilar los objetos
+	
+# Regla para compilar los objetos del directorio SRC_DIR
 $(COMPILED_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
+# Regla para compilar main.cpp
+$(MAIN_OBJECT): main.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+
+
 # Limpieza de archivos compilados
 clean:
 	rm -rf $(COMPILED_DIR)/*.o $(EXECUTABLE)
-
-.PHONY: all clean

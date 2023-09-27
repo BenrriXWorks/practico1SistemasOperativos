@@ -3,6 +3,10 @@
 #include <fstream>
 #include <vector>
 
+#include <iostream>
+#include <locale>
+#include <codecvt>
+
 #pragma once
 
 class FileReader : public FileHandler 

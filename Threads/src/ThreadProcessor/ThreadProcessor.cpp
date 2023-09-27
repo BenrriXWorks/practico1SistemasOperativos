@@ -1,62 +1,45 @@
 #include "../../include/ThreadProcessor.h"
 
-
 using namespace std;
 
 ThreadProcessor::ThreadProcessor(FileStack &stack, uint8_t nThreads) : 
     nThreads(nThreads), stack((&stack)) {};
 
 void ThreadProcessor::execute() {
-    while (!stack->empty()) {
 
-        FileReader *fr = stack->next();
+    while (!stack->empty()){
+        FileReader* fr = stack->next();
+        unordered_map<string,int> words;
 
-     /*if (!fr.open(path))
-        return (printf("UserDB: No se pudo abrir el archivo en {%s}\n", path.c_str()),false);*/
-        // aqui contamos palabras
-        unordered_map<string, int> contadorPalabras;
-
-        while(fr->eof()){
-            string texto = fr->readLine();
-            vector <string> lineas = split(texto,' ');
-            for(string linea: lineas){
-                auto it = contadorPalabras.find(linea);
-                if (it != contadorPalabras.end())
-                    it->second++;
-                else
-                    contadorPalabras.emplace(linea,0);
-
+        while (!fr->eof()){
+            string line = fr->readLine();
+            
+            for (string const& word : split(strip(line,'\n'),' ')){
+                unordered_map<string,int>::iterator it = words.find(word);
+                if (it == words.end()) words.emplace(word,1); else it->second++;
             }
         }
-        // aqui se creara el archivo
-
-        FileWriter fw;
-        string path = "salida/"; // Leer desde el entorno
-        //aqui le debo agregar la ruta de salida
-        if(!fw.open(path+fr->getFilename())){
-            printf("ThreadProcessor: No se pudo crear el archivo en {%s}\n", path.c_str());
-            continue;
+        FileWriter filewriter;
+        if (!filewriter.open(string("salida")+string("/")+fr->getFilename())){
+            printf("ThreadProcessor (execute): No se pudo escribir en el archivo en {%s}", fr->getFullRoute().c_str());
         }
 
-        for (const auto &entry : contadorPalabras) {
-            fw.writeLine(entry.first + string(",") + to_string(entry.second));
-        }
-        fr->close();
-        fw.close();
-        cout << "Archivo " << fr->getFullRoute() << ", procesado por el thread " << this_thread::get_id() << endl << std::flush;
-        
+        for (const auto& p : words)
+            filewriter << string(p.first);
+        filewriter.close();
     }
+
 }
 
 bool ThreadProcessor::begin() {
 
-    for (uint8_t i = 0; i < nThreads; i++) {
-        threads.push_back(std::thread([this]() { this->execute(); }));
-    }
+    threads = vector<thread>();
 
-    for (uint8_t i = 0; i < nThreads; i++) {
-        threads.at(i).join(); // espera a que terminen los procesos
-    }
+    for (uint8_t i = 0; i < nThreads; i++) threads.emplace_back([this]() { this->execute(); });
+    
+    for (std::thread& t : threads) t.join();
+    
 
+    
     return true;
 }

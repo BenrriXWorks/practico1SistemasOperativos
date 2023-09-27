@@ -55,6 +55,7 @@ bool FileWriter::open(const std::string path) {
         fullRoute = path;
     }
 
+    try{
     // Luego, abre el archivo
     fs.open(path.c_str(), std::ios::out | std::ios::binary);
     if (!fs.is_open()) {
@@ -64,7 +65,10 @@ bool FileWriter::open(const std::string path) {
     fs.imbue(std::locale(fs.getloc(), new std::codecvt_utf8<wchar_t>));
     fullRoute = path;
     return true;
-
+    }
+    catch(...){
+        return false;
+    }
 }
 
 bool FileWriter::openAppend(const std::string path) {
@@ -91,7 +95,6 @@ bool FileWriter::openAppend(const std::string path) {
         std::cerr << "FileWriter: Failed to open the file." << std::endl;
         return false;
     }
-    fs.imbue(std::locale(fs.getloc(), new std::codecvt_utf8<wchar_t>));
     fullRoute = path;
     return true;
 }
