@@ -11,5 +11,5 @@ private:
 public:
     FileReader* next();
     FileStack(std::vector<std::string> listOfPaths);
-    inline bool empty() {return cola.size()==0;};
+    inline bool empty() {return size==0;};
 };
