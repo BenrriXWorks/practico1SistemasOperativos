@@ -4,15 +4,14 @@ FileReader* FileStack::next(){
 
     if (cola.empty())
         throw std::runtime_error("La cola esta vacia");
-
-    FileReader *file = cola.back();
-    cola.pop_back();
+    FileReader *file = cola.at(size--);
     return file;
 };
 
 
 FileStack::FileStack(std::vector<std::string> listOfPaths){
 
+    size = listOfPaths.size();
     for (std::string s : listOfPaths){
         FileReader *fr = new FileReader();
         if (!fr->open(s)){

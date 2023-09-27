@@ -3,24 +3,15 @@
 
 using namespace std;
 
-ThreadProcessor::ThreadProcessor(FileStack &stack, uint8_t nThreads) {
-
-    try{
-        threads = new thread[nThreads];
-    }
-    catch(...){
-        printf("ThreadProcessor: No se iniciarion los threads correctamente\n");
-        throw std::runtime_error("Error al iniciar threads");
-    }
-    this->stack = &stack; 
-}
+ThreadProcessor::ThreadProcessor(FileStack &stack, uint8_t nThreads) : 
+    nThreads(nThreads), stack((&stack)) {};
 
 void ThreadProcessor::execute() {
-    if (!stack->empty()) {
+    while (!stack->empty()) {
 
         FileReader *fr = stack->next();
 
-    /*if (!fr.open(path))
+     /*if (!fr.open(path))
         return (printf("UserDB: No se pudo abrir el archivo en {%s}\n", path.c_str()),false);*/
         // aqui contamos palabras
         unordered_map<string, int> contadorPalabras;
@@ -54,14 +45,14 @@ void ThreadProcessor::execute() {
 }
 
 bool ThreadProcessor::begin() {
-    while (!stack->empty()) {
+
     for (uint8_t i = 0; i < nThreads; i++) {
-        threads[i] = std::thread([this]() { this->execute(); });
+        threads.push_back(std::thread([this]() { this->execute(); }));
     }
 
     for (uint8_t i = 0; i < nThreads; i++) {
-        threads[i].join(); // espera a que terminen los procesos
-    }}
+        threads.at(i).join(); // espera a que terminen los procesos
+    }
 
     return true;
 }

@@ -11,7 +11,7 @@
 class ThreadProcessor
 {
 private:
-    std::thread* threads;
+    std::vector<std::thread> threads;
     // Realiza la funcion en cada thread.
     void execute();
     uint8_t nThreads;
