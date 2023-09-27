@@ -13,7 +13,7 @@ class ThreadProcessor
 private:
     std::vector<std::thread> threads;
     // Realiza la funcion en cada thread.
-    void execute();
+    void execute(uint8_t threadId);
     uint8_t nThreads;
     FileStack *stack;
 
@@ -22,6 +22,5 @@ public:
     ThreadProcessor(FileStack &stack, uint8_t nThreads);
     // Comienza la ejecucion de los threads
     bool begin();
-    // Destruye los punteros a threads
 
 };

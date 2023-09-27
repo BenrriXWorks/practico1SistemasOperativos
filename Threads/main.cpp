@@ -13,19 +13,14 @@ private:
         std::vector<std::string> archivos;
         try {
             if (fs::exists(directorio) && fs::is_directory(directorio)) {
-                for (const auto& archivo : fs::directory_iterator(directorio)) {
-                    if (fs::is_regular_file(archivo)) {
-                        // Obtén el nombre del archivo
-                        std::string nombreArchivo = archivo.path().filename().string();
-                        // Concatena la ruta relativa al nombre del archivo
-                        std::string rutaRelativa = directorio / nombreArchivo;
-                        archivos.push_back(rutaRelativa);
-                    }
-                }
-            } else {
-                std::cerr << "El directorio no existe o no es válido: " << directorio << std::endl;
+                for (const auto& archivo : fs::directory_iterator(directorio)) 
+                    if (archivo.is_regular_file()) 
+                        archivos.push_back(archivo.path().string());
             }
-        } catch (const std::filesystem::filesystem_error& ex) {
+            else 
+                std::cerr << "El directorio no existe o no es válido: " << directorio << std::endl;
+        } 
+        catch (const std::filesystem::filesystem_error& ex) {
             std::cerr << "Error al abrir el directorio: " << ex.what() << std::endl;
         }
         return archivos;
@@ -42,16 +37,12 @@ public:
         
             FileStack fileStack(archivosEnDirectorio(envLoader->getPathIn()));
             int nthreads=1;
-            try{
-                nthreads = stoi(envLoader->getNThreads());
-            }
-            catch(...){
-                printf("AMOUNT_THREADS (env) no detectado, iniciando con 1 Thread.\n");
-            }
+            if (envLoader->getNThreads().find_first_not_of("0123456789") != std::string::npos)
+                throw std::runtime_error("La cantidad de threads no es legal\n");
+            nthreads = stoi(envLoader->getNThreads());
+
             ThreadProcessor tp(fileStack, nthreads);
             tp.begin();
-            printf("hola\n");
-
 
     };
 
@@ -61,8 +52,6 @@ int main(){
     
 
     Main();
-
-
 
     return 0;
 }
