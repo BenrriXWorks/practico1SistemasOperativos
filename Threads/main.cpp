@@ -42,8 +42,9 @@ public:
             if (envLoader->getPathIn() == "Processed" || envLoader->getPathOut() == "Processed"
                 || envLoader->getPathIn().find("src") != std::string::npos || envLoader->getPathOut().find("src") != std::string::npos
                 || envLoader->getPathIn() == "include" || envLoader->getPathOut() == "include"
-                || envLoader->getPathIn().find("compiled") != std::string::npos || envLoader->getPathOut().find("compiled") != std::string::npos)
-                    throw std::runtime_error("No puedes guardar en carpetas protegidas por el programa\n");
+                || envLoader->getPathIn().find("compiled") != std::string::npos || envLoader->getPathOut().find("compiled") != std::string::npos
+                || envLoader->getPathIn() == "extern" || envLoader->getPathOut() == "extern")
+                    throw std::runtime_error("No puedes acceder a carpetas protegidas por el programa\n");
             if (envLoader->getPathIn() == envLoader->getPathOut())
                 throw std::runtime_error("Main: La carpeta de entrada no puede ser la de salida\n");
             nthreads = stoi(envLoader->getNThreads());

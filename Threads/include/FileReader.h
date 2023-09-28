@@ -19,4 +19,5 @@ public:
     bool eof();
     bool close();
     FileReader& operator>>(std::string& line);
+    
 };
