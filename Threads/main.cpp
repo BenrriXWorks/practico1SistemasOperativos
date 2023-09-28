@@ -38,9 +38,15 @@ public:
             FileStack fileStack(archivosEnDirectorio(envLoader->getPathIn()));
             int nthreads=1;
             if (envLoader->getNThreads().find_first_not_of("0123456789") != std::string::npos)
-                throw std::runtime_error("La cantidad de threads no es legal\n");
+                throw std::runtime_error("La cantidad de threads contiene caracteres invalidos\n");
+            if (envLoader->getPathIn() == "Processed" || envLoader->getPathOut() == "Processed"
+                || envLoader->getPathIn().find("src") != std::string::npos || envLoader->getPathOut().find("src") != std::string::npos
+                || envLoader->getPathIn() == "include" || envLoader->getPathOut() == "include"
+                || envLoader->getPathIn().find("compiled") != std::string::npos || envLoader->getPathOut().find("compiled") != std::string::npos)
+                    throw std::runtime_error("No puedes guardar en carpetas protegidas por el programa\n");
+            if (envLoader->getPathIn() == envLoader->getPathOut())
+                throw std::runtime_error("Main: La carpeta de entrada no puede ser la de salida\n");
             nthreads = stoi(envLoader->getNThreads());
-
             ThreadProcessor tp(fileStack, nthreads);
             tp.begin();
 

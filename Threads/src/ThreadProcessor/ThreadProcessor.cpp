@@ -4,9 +4,17 @@ using namespace std;
 
 
 ThreadProcessor::ThreadProcessor(FileStack &stack, uint8_t nThreads) : 
-    nThreads(nThreads), stack((&stack)) {};
+    nThreads(nThreads), stack((&stack)) {
+        uint8_t maxThreads = thread::hardware_concurrency();
+        if (nThreads > maxThreads){
+            printf("Se asignaron mas threads de los soportados por hardware, asignando %u en su lugar\n",maxThreads);
+            nThreads = maxThreads;
+        }
+    };
 
 void ThreadProcessor::execute(uint8_t threadId) {
+
+    EnvLoader* env = EnvLoader::getInstance();
 
     while (!stack->empty()){
 
@@ -28,7 +36,7 @@ void ThreadProcessor::execute(uint8_t threadId) {
             }
         }
         FileWriter filewriter;
-        if (!filewriter.open(string("salida")+string("/")+fr->getFilename())){
+        if (!filewriter.open(env->getPathOut()+string("/")+fr->getFilename())){
             printf("ThreadProcessor (execute): No se pudo escribir en el archivo en {%s}", fr->getFullRoute().c_str());
         }
 
@@ -41,6 +49,9 @@ void ThreadProcessor::execute(uint8_t threadId) {
 }
 
 bool ThreadProcessor::begin() {
+
+    if (stack->empty())
+        return (printf("ThreadProcessor: No hay archivos para procesar.\n"),true);
 
     for (uint8_t i = 0; i < nThreads; i++) 
         threads.emplace_back([=]() { this->execute(i); });
