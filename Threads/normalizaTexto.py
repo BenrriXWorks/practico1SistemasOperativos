@@ -1,4 +1,3 @@
-"debo recibir una lista de rutas y procesarlas y crear el mismo nombre en procesed"
 import os
 import unicodedata
 import sys
@@ -8,7 +7,7 @@ def remove_accents(text):
 
 def process(paths):
     # Crear la carpeta "processed" si no existe
-    carpeta = "../processed"
+    carpeta = "Processed"
     os.makedirs(carpeta, exist_ok=True)
 
     for path in paths:
@@ -18,7 +17,7 @@ def process(paths):
             
                 textoNuevo = remove_accents(text)
     
-                textoNuevo = ''.join(char for char in textoNuevo if char.islower() or char.isspace())
+                textoNuevo = ''.join((char," ")[char=="\n"] for char in textoNuevo if char.islower() or char.isspace())
                 
                 nombreArchivo = os.path.basename(path)
             

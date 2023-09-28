@@ -1,5 +1,4 @@
 testword;1
-hola;1
-jijijia;1
-chao;1
-hola;2
+jijijia;1
+chao;1
+hola;3
